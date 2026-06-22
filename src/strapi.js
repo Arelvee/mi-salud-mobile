@@ -80,7 +80,7 @@ class Strapi {
    * @return {Promise<Object>} User object and jwt.
    */
   register (data) {
-    return this.request.post('/users', data)
+    return this.request.post('/auth/local/register', data)
       .then(data => {
         this.token = data.jwt
         return data

@@ -1,7 +1,8 @@
 import React from 'react'
 import Store, { initialState } from '../../store'
 import { Container, Text, View, Thumbnail, Card, CardItem, Body, Form, Item, Input, Button, H1, Spinner, Icon } from 'native-base'
-import { StyleSheet, Dimensions, StatusBar, AsyncStorage, Platform } from 'react-native'
+import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { LinearGradient } from 'expo-linear-gradient'
 import strapi from '../../strapi'
 import { validate, alert } from '../../utils'
@@ -63,7 +64,7 @@ class Login extends React.Component {
 
       store.set('pushToken')(pushToken)
 
-      if (user && user.role.type === 'leader') {
+      if (user && ['leader', 'admin'].includes(user.role.type)) {
         const existingUser = await strapi.get('profiles', { token: pushToken })
 
         if (existingUser && existingUser.length > 0 && existingUser[0].id !== user.profile.id) {
@@ -121,7 +122,7 @@ class Login extends React.Component {
       return alert(logout)
     }
 
-    if (user && ['leader', 'responder'].includes(user.role.type)) {
+    if (user && ['admin', 'leader', 'responder'].includes(user.role.type)) {
       return navigation.navigate('team')
     }
   }
@@ -149,7 +150,7 @@ class Login extends React.Component {
         if (auth.user.confirmed !== false && auth.user.blocked !== true) {
           const { store, navigation } = this.props
 
-          if (!['leader', 'responder'].includes(auth.user.role.type)) {
+          if (!['admin', 'leader', 'responder'].includes(auth.user.role.type)) {
             this.setState({ loading: false })
             return alert(`${auth.user.role.name} accounts are not allowed to use the app.`)
           }

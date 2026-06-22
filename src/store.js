@@ -1,5 +1,5 @@
 import { createConnectedStore } from 'undux'
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 // Clear Storage - FOR DEBUGGING PURPOSE ONLY
 // AsyncStorage.clear()

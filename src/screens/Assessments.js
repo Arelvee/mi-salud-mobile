@@ -78,7 +78,7 @@ class Assessments extends React.Component {
     const options = ['Refresh', 'Create Screening', 'Cancel'].filter(option => {
       switch (option) {
         case 'Create Screening':
-          return user.role.type === 'leader'
+          return ['admin', 'leader'].includes(user.role.type)
         default:
           return true
       }

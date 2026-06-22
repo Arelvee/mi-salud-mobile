@@ -1,5 +1,14 @@
+import Constants from 'expo-constants'
+
+const developmentHost = Constants.manifest && Constants.manifest.debuggerHost
+  ? Constants.manifest.debuggerHost.split(':')[0]
+  : 'localhost'
+const configuredApi = Constants.manifest && Constants.manifest.extra
+  ? Constants.manifest.extra.api
+  : undefined
+
 const config = {
-  "api": "https://mi-salud.herokuapp.com",
+  "api": configuredApi || `http://${developmentHost}:1337`,
   "deploymentTypes": {
     "pre": "Pre-deployment",
     "during": "During deployment",

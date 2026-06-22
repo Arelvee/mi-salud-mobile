@@ -110,7 +110,7 @@ class Team extends React.Component {
     const { store } = this.props
     const user = store.get('user')
 
-    if (user.role.type !== 'leader') {
+    if (!['admin', 'leader'].includes(user.role.type)) {
       alert({
         title: store.get('team').name,
         message: 'Are you sure you want to leave?',
@@ -185,7 +185,7 @@ class Team extends React.Component {
     const team = store.get('team')
     const user = store.get('user')
 
-    if (user.role.type !== 'leader') {
+    if (!['admin', 'leader'].includes(user.role.type)) {
       return null
     } else {
       return member.isLeaderOf !== team.id ? navigation.navigate('memberScreenings', { user: member }) : null
@@ -290,7 +290,7 @@ class Team extends React.Component {
           </Header>
           <Content>
             {/* Team Code */}
-            { user.role.type === 'leader' ? (
+            { ['admin', 'leader'].includes(user.role.type) ? (
               <View style={layout.spacer}>
                 <Card>
                   <CardItem header>
@@ -319,7 +319,7 @@ class Team extends React.Component {
                     <Text>{member.lastname}, {member.firstname}</Text>
                     <Text note>{member.isLeaderOf === team.id ? 'Leader' : 'Responder'}</Text>
                   </Body>
-                  { user.role.type === 'leader' ? (
+                  { ['admin', 'leader'].includes(user.role.type) ? (
                     <Right>
                       <Button danger icon onPress={this.removeMember.bind(this, member)}>
                         <Icon type="FontAwesome" name="close" />

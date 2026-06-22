@@ -18,12 +18,12 @@ class Drawer extends React.Component {
         {
           label: 'Team',
           route: 'team',
-          access: ['leader', 'responder', 'without-a-team']
+          access: ['admin', 'leader', 'responder', 'without-a-team']
         },
         {
           label: 'Screenings',
           route: 'assessments',
-          access: ['leader', 'responder']
+          access: ['admin', 'leader', 'responder']
         }
       ]
     }
